@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator - Business Statistics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            font-size: 18px;
+            padding: 10px;
+            margin: 5px;
+            width: 270px;
+            text-align: right;
+        }
+        button {
+            font-size: 18px;
+            padding: 15px;
+            margin: 5px;
+            width: 60px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        .buttons-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .distributions-btns {
+            display: flex;
+            flex-wrap: wrap;
+            width: 360px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h2>Scientific Calculator - Business Statistics</h2>
+    <input type="text" id="display" disabled />
+    
+    <div class="button-container">
+        <!-- Basic operations -->
+        <div class="buttons-row">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('/')">/</button>
+            <button onclick="appendValue('sin(')">sin</button>
+            <button onclick="appendValue('cos(')">cos</button>
+            <button onclick="appendValue('tan(')">tan</button>
+        </div>
+        <div class="buttons-row">
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="appendValue('*')">*</button>
+            <button onclick="appendValue('log(')">log</button>
+            <button onclick="appendValue('ln(')">ln</button>
+            <button onclick="appendValue('sqrt(')">√</button>
+        </div>
+        <div class="buttons-row">
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('-')">-</button>
+            <button onclick="appendValue('^')">^</button>
+            <button onclick="appendValue('e^')">e^x</button>
+            <button onclick="appendValue('(')">(</button>
+        </div>
+        <div class="buttons-row">
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendValue('+')">+</button>
+            <button onclick="appendValue(')')">)</button>
+        </div>
+    </div>
+
+    <div class="distributions-btns">
+        <!-- Distribution Functions -->
+        <button onclick="poissonDistribution()">Poisson</button>
+        <button onclick="binomialDistribution()">Binomial</button>
+        <button onclick="exponentialDistribution()">Exponential</button>
+        <button onclick="normalDistribution()">Normal</button>
+    </div>
+</div>
+
+<script>
+    // Clear display
+    function clearDisplay() {
+        document.getElementById('display').value = '';
+    }
+
+    // Append value to display
+    function appendValue(value) {
+        document.getElementById('display').value += value;
+    }
+
+    // Calculate the result
+    function calculate() {
+        let input = document.getElementById('display').value;
+        try {
+            let result = eval(input);
+            document.getElementById('display').value = result;
+        } catch (e) {
+            document.getElementById('display').value = 'Error';
+        }
+    }
+
+    // Poisson Distribution Calculation
+    function poissonDistribution() {
+        let lambda = parseFloat(prompt("Enter λ (mean number of events):"));
+        let x = parseInt(prompt("Enter x (number of occurrences):"));
+        let result = (Math.pow(lambda, x) * Math.exp(-lambda)) / factorial(x);
+        alert("Poisson Probability for λ = " + lambda + " and x = " + x + " is: " + result);
+    }
+
+    // Binomial Distribution Calculation
+    function binomialDistribution() {
+        let n = parseInt(prompt("Enter n (number of trials):"));
+        let p = parseFloat(prompt("Enter p (probability of success):"));
+        let x = parseInt(prompt("Enter x (number of successes):"));
+        let result = (factorial(n) / (factorial(x) * factorial(n - x))) * Math.pow(p, x) * Math.pow(1 - p, n - x);
+        alert("Binomial Probability for n = " + n + ", p = " + p + " and x = " + x + " is: " + result);
+    }
+
+    // Exponential Distribution Calculation
+    function exponentialDistribution() {
+        let lambda = parseFloat(prompt("Enter λ (rate of occurrence):"));
+        let x = parseFloat(prompt("Enter x (value for calculation):"));
+        let result = lambda * Math.exp(-lambda * x);
+        alert("Exponential Probability for λ = " + lambda + " and x = " + x + " is: " + result);
+    }
+
+    // Normal Distribution Calculation (Z-Score)
+    function normalDistribution() {
+        let mean = parseFloat(prompt("Enter the mean (μ):"));
+        let stdDev = parseFloat(prompt("Enter the standard deviation (σ):"));
+        let x = parseFloat(prompt("Enter the x value:"));
+        let z = (x - mean) / stdDev;
+        alert("Z-Score for x = " + x + " is: " + z);
+    }
+
+    // Factorial function for Poisson and Binomial
+    function factorial(num) {
+        if (num === 0 || num === 1) return 1;
+        return num * factorial(num - 1);
+    }
+</script>
+
+</body>
+</html>
